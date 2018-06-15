@@ -1,0 +1,410 @@
+<!doctype html>
+<html ng-app="todoApp">
+<head>
+  <title>ChatBox - DAHLEM</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="js/chatBox.js"></script>
+  <style type="text/css">
+  html, body, .container {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .container {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .contacts {
+    display: inherit;
+    flex-basis: 100%;
+    width: 240px;
+    overflow-y: hidden;
+    background-color: grey;
+    background-size: 6px 6px;
+  }
+  .contacts .buttons {
+    margin-right: 6px;
+  }
+  .contacts .buttons::after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+    font-size: 0;
+  }
+
+/**
+.contacts button {
+  float: right;
+  height: 30px;
+  width: 30px;
+  margin: 8px 6px 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  font-family: Fontawesome;
+  color: skyblue;
+  background: whitesmoke;
+  cursor: pointer;
+  }**/
+  .contacts ul li button {
+    background-color: #8f8f8f;
+    color: white;
+    padding: 0.5em 0.5em;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .contacts ul li button:hover {
+    background-color: black;
+    transition:0.5s;
+  }
+
+  .contacts ul {
+    width: calc(100% - 12px * 2);
+    margin: 0 12px;
+    padding: 0;
+    list-style: none;
+  }
+  .contacts li {
+    position: relative;
+    width: 100%;
+    height: 84px;
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+    border-radius: 2px;
+    background: whitesmoke;
+  }
+/**
+.contacts li::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 12px;
+  height: 48px;
+  width: 48px;
+  border-radius: 30px;
+  background: gainsboro;
+}
+.contacts li::after {
+  content: "✖";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  overflow: hidden;
+  height: 0;
+  line-height: 26px;
+  width: 0;
+  margin: 12px;
+  border-radius: 12px;
+  text-align: center;
+  color: whitesmoke;
+  background: tomato;
+  cursor: pointer;
+  transition: height 0.1s, width 0.1s, margin 0.1s;
+  }**/
+  .contacts li:hover::after {
+    height: 24px;
+    width: 24px;
+    margin: 0;
+  }
+
+  .messages, .form {
+    width: calc(100% - 240px);
+  }
+
+  .messages {
+    flex: 1 1px;
+    background-image:url(https://loremflickr.com/1200/800/cat) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-y: scroll;
+  }
+  .messages ul {
+    list-style: none;
+    margin: 0;
+    padding: 36px;
+  }
+  .messages ul::after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+    font-size: 0;
+  }
+  .messages li {
+    float: left;
+    clear: both;
+    line-height: 1.4em;
+    max-width: 30%;
+    margin: 12px;
+    padding: 0.7em 16px;
+    border-radius: 18px;
+    font-family: sans-serif;
+    color: whitesmoke;
+    background: #595959;
+  }
+  .messages li:nth-child(odd) {
+    border-bottom-left-radius: 2px;
+  }
+  .messages li:nth-child(even) {
+    float: right;
+    border-bottom-right-radius: 2px;
+  }
+
+  .form {
+    background: #d6d6d6;
+  }
+
+  .form-inner {
+    height: 60px;
+    width: calc(100% - 12px * 2);
+    margin: 12px;
+    border-radius: 2px;
+    background: white;
+  }
+
+  .form-inner button {
+    float: right;
+    height: 100%;
+    width: 10%;
+    border: 0;
+    border-radius: 0 2px 2px 0;
+    font: 30px/60px sans-serif;
+    color: whitesmoke;
+    background: #595959;
+    cursor: pointer;
+  }
+
+  .form-inner input {
+    float: left;
+    height: 100%;
+    width: 89%;
+    border: 0;
+  }
+
+  .small-screen.container {
+    align-content: center;
+  }
+  .small-screen .stack-wrap {
+    position: relative;
+    flex: 1 1px;
+  }
+  .small-screen .stack-wrap div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  .small-screen .contacts {
+    left: 0;
+    width: 66px;
+  }
+  .small-screen .contacts .buttons {
+    display: none;
+  }
+  .small-screen .contacts ul {
+    width: 100%;
+    margin: 0;
+  }
+  .small-screen .contacts li {
+    height: 66px;
+    margin: 0;
+    background: transparent;
+  }
+  .small-screen .contacts li::before {
+
+    top: 9px;
+    left: 9px;
+    background: green;
+  }
+  .small-screen .contacts li::after {
+    top: -2px;
+    right: 2px;
+  }
+  .small-screen .messages {
+    left: 66px;
+    right: 0;
+    width: auto;
+  }
+  .small-screen .form {
+    width: 100%;
+  }
+
+  .form{
+    margin: 0px !important;
+  }
+
+  form input {
+    background-color: transparent;
+  }
+
+  .white-text{
+    color:white;
+  }
+
+  .text-black{
+    color:black;
+  }
+
+  html{
+    font-family: 'Nunito', sans-serif !important;
+  }
+
+  .header{
+    height: 150px;
+    width: 100%;
+  }
+
+  h1,h2,h3,h4,h5{
+    padding-left: 1em;
+  }
+
+  .date{
+    font-size: 10px;
+  }
+
+  .actuality{
+    background-color: grey;
+    opacity: 0.8;
+    padding: 0.5em;
+  }
+
+  .account-form{
+    flex: 1 1px;
+    width: 100%;
+    height: 550px;
+    background-color: grey;
+    opacity: 0.8;
+  }
+
+  hr{
+    background-color: black!important;
+  }
+
+  @media screen and (max-width: 640px){
+    .contacts{
+      display: none;
+    }
+
+    .messages{
+      width: 100%;
+    }
+    .form{
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container" ng-controller="ChatController">
+    <div class="contacts">
+      <ul>
+        <li>
+          <p style="text-align: center;padding-top: 1.5em">{{user.name | uppercase}}</p>
+        </li>
+        <li>
+          <p style="text-align: center;padding-top: 1em"><i class="material-icons">wc</i></p>
+          <button ng-click="accessMyAccount()">Modifier Compte</button>
+        </li>
+        <li>
+          <p style="text-align: center;padding-top: 1.5em">Discuter</p>
+          <button ng-click="resetMessages()">Discuter</button>
+        </li>
+        <li>
+          <p style="text-align: center;padding-top: 1.5em">Voir toute l'actualité</p>
+          <button ng-click="showActualities()">Voir</button>
+        </li>
+        <li>
+          <p style="text-align: center;padding-top: 1.5em">Voir les commandes</p>
+          <button ng-click="help()">Voir</button>
+        </li>
+        <li>
+          <p style="text-align: center;padding-top: 1.5em">Réinitialiser la conversation</p>
+          <button ng-click="resetMessages()">Réinitialiser</button>
+        </li>
+      </ul>
+    </div>
+    <div class="messages">
+      <ul ng-if="showActu === false && showCommand === false && showAccount === false">
+        <li ng-repeat="mes in messages">
+          <span ng-if="mes.user == 'user'" class="user">
+            <span class="date">Vous à {{mes.date}} :</span><br/>{{mes.text}}
+          </span>
+          <span ng-if="mes.user == 'bot'" class="bot"><span class="date">Ordinateur à {{mes.date}} :</span> <br/>{{mes.text}}</span>
+        </li>
+      </ul>
+      <div ng-if="showActu === true">
+        <div ng-repeat="message in messages">
+          <div class="actuality">{{message}}</div>
+        </div>
+      </div>
+      <div ng-if="showCommand === true">
+        <div ng-repeat="message in messages">
+          <div class="actuality">{{message}}</div>
+        </div>
+      </div>
+      <div ng-if="showAccount === true">
+        <form class="account-form white-text">
+          <h2 style="margin:0;padding: 1em;">Modification des informations personnelles : </h2>
+          <div style="border-top: 1px solid black; width:100%">
+
+          </div>
+          <div style="margin: 1.5em; width :10%;">
+            <label for="name" style="width:100%;">Votre prénom</label>
+            <input id="name" ng-model="user.name" type="text" style="width:100%; background-color:#d6d6d6;border: 0;" name="" value="" placeholder="" >
+          </div>
+        </form>
+      </div>
+    </div>
+    <form class="form">
+      <div class="form-inner">
+        <input ng-if="showActu === false && showCommand === false && showAccount === false" ng-model="message.text" type="text" name="" value="" placeholder="Ecrire un message" >
+        <button  ng-if="showActu === false && showCommand === false" ng-click="addMessageUser()">✚</button>
+        <button  ng-if="showActu === true || showCommand === true" ng-click="resetMessages()" style="background-color: red;"><i class="material-icons">clear</i></button>
+      </div>
+    </form>
+  </div>
+  <script>!function () {
+    var container = document.querySelector('.container');
+    var stackWrap = document.querySelector('.stack-wrap');
+    var contacts = document.querySelector('.contacts');
+    var messages = document.querySelector('.messages');
+    var small, limiter;
+
+    function relayout () {
+      var width = window.innerWidth;
+      if (!small && width < 600) {
+        small = true;
+        container.classList.add('small-screen');
+        stackWrap.appendChild(contacts);
+        stackWrap.appendChild(messages);
+      } else if (small && width >= 600) {
+        small = false;
+        container.classList.remove('small-screen');
+        container.insertBefore(contacts, stackWrap);
+        container.insertBefore(messages, stackWrap);
+      }
+    }
+
+    window.addEventListener('resize', function () {
+      clearTimeout(limiter);
+      limiter = setTimeout(relayout, 100);
+    });
+
+    relayout();
+  }();
+</script>
+</body>

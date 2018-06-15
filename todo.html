@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="todoApp">
+<head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+  <script src="js/todo.js"></script>
+  <link rel="stylesheet" href="css/todo.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css">
+</head>
+<body>
+  <h2>Todo</h2>
+  <div ng-controller="TodoListController">
+    Hello {{ name }}, je suis {{ target }}, et j'ai {{ test.age }} ans
+    <button ng-click="getMonAge()">mon age</button>
+    <button ng-click="resetAge()">cancel</button>
+    <hr>
+    <ul>
+      <li ng-repeat="personne in people">
+        Personne : {{ personne.name }} a {{ personne.age }} ans
+        <button ng-click="editPersonne(personne, $index)">éditer</button>
+        <button ng-click="deletePersonne(personne, $index)">supprimer</button>
+      </li>
+    </ul>
+    <input placeholder="nom" type="text" ng-model="newName.name"/>
+    <input placeholder="age" type="number" ng-model="newName.age"/>
+    <button ng-if="isEditable === false" ng-click="addPerson()">Ajouter une personne</button>
+    <button ng-if="isEditable === true" ng-click="updatePersonne()">Mettre à jour la personne</button>
+    <hr>
+    <h4>Comparatif de personne</h4>
+    <select>
+      <option></option>
+      option
+      <option ng-repeat="personne in people">
+        <span ng-click="selectUser(personne)">{{ personne.name }}</span> 
+      </option>
+    </select>
+    <select>
+      <option></option>
+      option
+      <option ng-repeat="personne in people">
+        <span ng-click="selectOtherUser(personne)">{{ personne.name }}</span> 
+      </option>
+    </select>
+
+    <p ng-if='isExist === true'>Cette personne existe déjà</p>
+    <p ng-if='isRequired === true'>Nom et Age obligatoires.</p>
+  </div>
+</body>
+</html>
+
+<!-- 
+Copyright 2018 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
