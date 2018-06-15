@@ -63,7 +63,7 @@ angular.module('todoApp', [])
   ];
 
   $scope.message = {};
-
+  
   $scope.showActualities = function(){
     $scope.messages = [];
     $scope.messages.push("Les Thèmes : ");
