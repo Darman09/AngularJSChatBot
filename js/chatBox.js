@@ -63,13 +63,13 @@ angular.module('todoApp', [])
   ];
 
   $scope.message = {};
-  
+
   $scope.showActualities = function(){
     $scope.messages = [];
     $scope.messages.push("Les Thèmes : ");
-    for (var i = $scope.liens.length - 1; i >= 0; i--) {
-      var lien = $scope.liens[i];
-      var data =lien.cle +"("+lien.lienMagazine+")";
+    for (let i = $scope.liens.length - 1; i >= 0; i--) {
+      let lien = $scope.liens[i];
+      let data =lien.cle +"("+lien.lienMagazine+")";
       $scope.messages.push(data);
     }
     $scope.message = {};
@@ -89,9 +89,9 @@ angular.module('todoApp', [])
   $scope.help = function(){
     $scope.messages = [];
     $scope.messages.push("Les commandes : ");
-    for (var i = $scope.commandes.length - 1; i >= 0; i--) {
-      var command = $scope.commandes[i];
-      var data =command.nom +" : "+command.reaction+".";
+    for (let i = $scope.commandes.length - 1; i >= 0; i--) {
+      let command = $scope.commandes[i];
+      let data =command.nom +" : "+command.reaction+".";
       $scope.messages.push(data);
     }
     $scope.message = {};
@@ -109,7 +109,7 @@ angular.module('todoApp', [])
   $scope.validInformationAccount = function(){
   }
 
-  var checkLiens = function(array, prop) {
+  let checkLiens = function(array, prop) {
     for (var i = 0; i < array.length; i++) {
       var lien = array[i]
       if (prop.includes(lien.cle)) {
@@ -119,16 +119,16 @@ angular.module('todoApp', [])
     return null;
   }
 
-  var setUserBot = function(){
+  let setUserBot = function(){
     $scope.message.user = "bot";
   }
 
-  var setDateMessage = function(){
-    var date = new Date();
+  let setDateMessage = function(){
+    let date = new Date();
     $scope.message.date = date.getHours() + ":" + date.getMinutes();
   }
 
-  var insertBotMessage = function(message){
+  let insertBotMessage = function(message){
     $scope.message.text = message;
     $scope.message.user = "bot";
     setDateMessage();
@@ -136,7 +136,7 @@ angular.module('todoApp', [])
     $scope.message = {};
   }
 
-  var insertUserMessage =  function(){
+  let insertUserMessage =  function(){
     $scope.message.user = "user";
     setDateMessage();
     $scope.messages.push($scope.message);
@@ -144,9 +144,9 @@ angular.module('todoApp', [])
   }
 
   $scope.addMessageUser = function() {
-    var text = $scope.message.text;
+    let text = $scope.message.text;
     if (text != null) {
-      var lien = checkLiens($scope.liens, text);
+      let lien = checkLiens($scope.liens, text);
       if (lien != null) {
         insertUserMessage();
         $scope.message.user = "bot";
